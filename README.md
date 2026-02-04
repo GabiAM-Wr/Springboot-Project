@@ -1,2 +1,2 @@
 # Springboot-Project
-Aplicación web CRUD desarrollada con Java Spring Boot y arquitectura MVC. Implementa APIs REST integradas con base de datos relacional usando SQL Server y DBeaver. Incluye frontend básico con HTML, CSS y JavaScript, pruebas con Postman, contenerización con Docker y control de versiones con GitHub.
+CRUD web application developed with Java Spring Boot and MVC architecture. Implements REST APIs integrated with a relational database using SQL Server and DBeaver. Includes a basic frontend built with HTML, CSS, and JavaScript, endpoint testing with Postman, environment containerization with Docker, and version control using GitHub.
