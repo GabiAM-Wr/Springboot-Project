@@ -52,23 +52,57 @@ function displayProducts(products) {
     productsTbody.innerHTML = '';
     
     if (products.length === 0) {
-        productsTbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No products found</td></tr>';
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 6;
+        cell.style.textAlign = 'center';
+        cell.textContent = 'No products found';
+        row.appendChild(cell);
+        productsTbody.appendChild(row);
         return;
     }
     
     products.forEach(product => {
         const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${product.id}</td>
-            <td>${product.name}</td>
-            <td>${product.description || 'N/A'}</td>
-            <td>$${product.price.toFixed(2)}</td>
-            <td>${product.quantity}</td>
-            <td>
-                <button class="btn btn-edit" onclick="editProduct(${product.id})">Edit</button>
-                <button class="btn btn-danger" onclick="deleteProduct(${product.id})">Delete</button>
-            </td>
-        `;
+        
+        // Create cells with textContent for safety
+        const idCell = document.createElement('td');
+        idCell.textContent = product.id;
+        
+        const nameCell = document.createElement('td');
+        nameCell.textContent = product.name;
+        
+        const descCell = document.createElement('td');
+        descCell.textContent = product.description || 'N/A';
+        
+        const priceCell = document.createElement('td');
+        priceCell.textContent = `$${product.price.toFixed(2)}`;
+        
+        const qtyCell = document.createElement('td');
+        qtyCell.textContent = product.quantity;
+        
+        const actionsCell = document.createElement('td');
+        
+        const editBtn = document.createElement('button');
+        editBtn.className = 'btn btn-edit';
+        editBtn.textContent = 'Edit';
+        editBtn.addEventListener('click', () => editProduct(product.id));
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'btn btn-danger';
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.addEventListener('click', () => deleteProduct(product.id));
+        
+        actionsCell.appendChild(editBtn);
+        actionsCell.appendChild(deleteBtn);
+        
+        row.appendChild(idCell);
+        row.appendChild(nameCell);
+        row.appendChild(descCell);
+        row.appendChild(priceCell);
+        row.appendChild(qtyCell);
+        row.appendChild(actionsCell);
+        
         productsTbody.appendChild(row);
     });
 }

@@ -1,6 +1,7 @@
 package com.example.springbootcrud.controller;
 
 import com.example.springbootcrud.entity.Product;
+import com.example.springbootcrud.exception.ProductNotFoundException;
 import com.example.springbootcrud.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin(origins = "*")
 public class ProductController {
 
     private final ProductService productService;
@@ -69,7 +69,7 @@ public class ProductController {
         try {
             Product updatedProduct = productService.updateProduct(id, productDetails);
             return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
-        } catch (RuntimeException e) {
+        } catch (ProductNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -80,7 +80,7 @@ public class ProductController {
         try {
             productService.deleteProduct(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (RuntimeException e) {
+        } catch (ProductNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

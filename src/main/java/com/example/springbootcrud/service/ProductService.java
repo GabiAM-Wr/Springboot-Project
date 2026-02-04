@@ -1,6 +1,7 @@
 package com.example.springbootcrud.service;
 
 import com.example.springbootcrud.entity.Product;
+import com.example.springbootcrud.exception.ProductNotFoundException;
 import com.example.springbootcrud.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class ProductService {
     // Update product
     public Product updateProduct(Long id, Product productDetails) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+                .orElseThrow(() -> new ProductNotFoundException(id));
         
         product.setName(productDetails.getName());
         product.setDescription(productDetails.getDescription());
@@ -66,7 +67,7 @@ public class ProductService {
     // Delete product
     public void deleteProduct(Long id) {
         if (!productRepository.existsById(id)) {
-            throw new RuntimeException("Product not found with id: " + id);
+            throw new ProductNotFoundException(id);
         }
         productRepository.deleteById(id);
     }
